@@ -11,6 +11,30 @@ Assign specific time slots to each task (e.g., 10:30 AM - 1:00 PM).
 Toggle between light and dark modes for better accessibility.
 
 Professional and responsive design with an elegant background.
+Features
+Frontend:
+
+Responsive design with modern styling.
+
+Light/Dark mode toggle for enhanced user experience.
+
+Task scheduling with specific time slots.
+
+Supports adding, deleting, and displaying tasks dynamically.
+
+Backend:
+
+Built with Node.js and Express.js.
+
+RESTful APIs for adding, retrieving, and deleting tasks.
+
+In-memory storage of tasks for quick and lightweight operation.
+
+Server:
+
+Runs on Express.js, serving the frontend and handling API requests.
+
+Listens on http://localhost:5000.
 
 How to Use
 Open the application in your browser.
