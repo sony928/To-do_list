@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SONY'S TO-DO LIST</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fbe4e4; /* Nude pink background */
+            color: #333;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Title Styling */
+        h1 {
+            font-family: 'Trebuchet MS', sans-serif;
+            font-size: 32px;
+            color: #2c3e50; /* Dark blue */
+            font-weight: bold;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+
+        /* Input Section */
+        .input-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 220px;
+        }
+
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        /* Task List */
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        li span {
+            flex: 1;
+            text-align: left;
+            font-size: 16px;
+        }
+
+        li button {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        li button:hover {
+            background-color: #cc0000;
+        }
+
+        /* Dark Mode Styling */
+        .dark-mode {
+            background-color: #333;
+            color: white;
+        }
+
+        .dark-mode .container {
+            background-color: #444;
+        }
+
+        .dark-mode li {
+            background-color: #555;
+        }
+
+        /* Dark Mode Button */
+        .dark-mode-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .dark-mode-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <button id="darkModeButton" class="dark-mode-button">Switch to Dark Mode</button>
+    <div class="container">
+        <h1>SONY'S TO-DO LIST</h1>
+        <div class="input-container">
+            <input type="text" id="taskInput" placeholder="Enter a task">
+            <input type="text" id="timeInput" placeholder="Enter time (e.g., 10:30 AM - 1:00 PM)">
+            <button id="addTaskButton">Add Task</button>
+        </div>
+        <ul id="taskList"></ul>
+    </div>
+
+    <script>
+        const taskList = document.getElementById('taskList');
+        const taskInput = document.getElementById('taskInput');
+        const timeInput = document.getElementById('timeInput');
+        const addTaskButton = document.getElementById('addTaskButton');
+        const darkModeButton = document.getElementById('darkModeButton');
+
+        let tasks = []; // Array to store tasks in memory
+        let isDarkMode = false;
+
+        // Toggle Dark Mode
+        darkModeButton.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            isDarkMode = !isDarkMode;
+            darkModeButton.textContent = isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+        });
+
+        // Add a new task
+        function addTask() {
+            const task = taskInput.value.trim();
+            const time = timeInput.value.trim();
+            if (task && time) {
+                tasks.push({ text: task, time: time }); // Add task to the tasks array
+                taskInput.value = ''; // Clear input field
+                timeInput.value = ''; // Clear time field
+                displayTasks(); // Re-render tasks
+            } else {
+                alert('Please enter both task and time');
+            }
+        }
+
+        // Delete a task
+        function deleteTask(index) {
+            tasks.splice(index, 1); // Remove task from the array
+            displayTasks(); // Re-render tasks
+        }
+
+        // Display all tasks
+        function displayTasks() {
+            taskList.innerHTML = ''; // Clear current tasks from the list
+
+            tasks.forEach((task, index) => {
+                const li = document.createElement('li');
+
+                const taskText = document.createElement('span');
+                taskText.textContent = `${task.text} - FROM ${task.time}`;
+                li.appendChild(taskText);
+
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.onclick = () => deleteTask(index);
+                li.appendChild(deleteButton);
+
+                taskList.appendChild(li);
+            });
+        }
+
+        // Add event listener for the Add Task button
+        addTaskButton.addEventListener('click', addTask);
+    </script>
+</body>
+</html>
